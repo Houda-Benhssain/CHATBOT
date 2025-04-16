@@ -1,13 +1,15 @@
 import React from "react";
+import { Routes,Route } from "react-router-dom";
 import ChatInterface from "./Pages/interface_chat";
 
 import Home from "./Pages/Home";
 export default function App() {
   return (
-    <div >
-      {/* <ChatInterface /> */}
-       <Home/> 
-      
-    </div>
+    <>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/chat" element={<ChatInterface />} />
+    </Routes>
+    </>
   );
 }

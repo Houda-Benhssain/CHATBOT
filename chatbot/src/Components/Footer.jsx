@@ -1,0 +1,138 @@
+import React from "react"
+import { MessageCircle,Heart, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+import { useEffect, useState } from "react"
+import imagef from '../image/imageFooter.gif'
+export default function Footer() {
+  const [isHovered, setIsHovered] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+
+  // Trigger animation periodically
+  useEffect(() => {
+    const animationInterval = setInterval(() => {
+      setIsAnimating(true)
+      setTimeout(() => setIsAnimating(false), 2000)
+    }, 8000)
+
+    return () => clearInterval(animationInterval)
+  }, [])
+
+  return (
+    <footer className="bg-gradient-to-br from-pink-50 to-purple-100 pt-12 pb-6">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center">
+          {/* Animated Robot Image */}
+          <div
+            className="relative mb-8"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}>
+            <div
+              className={`
+              transform transition-all duration-700 ease-in-out
+              ${isHovered || isAnimating ? "scale-110" : "scale-100"}
+              ${isHovered || isAnimating ? "rotate-3" : "rotate-0"}
+            `}
+            >
+              {/* Robot Image */}
+              <div className="w-40 h-40 rounded-full overflow-hidden shadow-lg relative">
+                <img src={imagef} alt="Robochat" className="w-full h-full object-cover" />
+                <div
+                  className={`
+                  absolute inset-0 bg-gradient-to-r from-purple-400/30 to-pink-300/30
+                  transition-opacity duration-700 ease-in-out
+                  ${isHovered || isAnimating ? "opacity-100" : "opacity-0"}
+                `}
+                ></div>
+              </div>
+
+              {/* Animated elements */}
+              <div
+                className={`
+                absolute -top-2 -right-2 w-8 h-8 bg-orange-400 rounded-full 
+                transform transition-all duration-700 ease-in-out
+                ${isHovered || isAnimating ? "translate-y-1 translate-x-1" : ""}
+              `}
+              ></div>
+              <div
+                className={`
+                absolute -bottom-3 -left-3 w-6 h-6 bg-teal-400 rounded-full 
+                transform transition-all duration-700 ease-in-out
+                ${isHovered || isAnimating ? "translate-y-2 translate-x-2" : ""}
+              `}
+              ></div>
+              <div
+                className={`
+                absolute top-1/4 -left-4 w-4 h-4 bg-pink-400 rounded-full 
+                transform transition-all duration-700 ease-in-out
+                ${isHovered || isAnimating ? "translate-x-2" : ""}
+              `}
+              ></div>
+            </div>
+
+            {/* Robot name */}
+            <div className="text-center mt-4">
+              <span className="text-xl font-bold text-purple-900">Bienvenue </span>
+            </div>
+          </div>
+
+          {/* Company Info */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="bg-purple-600 text-white p-2 rounded-lg">
+                <MessageCircle size={20} />
+              </div>
+              <span className="text-xl font-bold text-purple-900">chatbot</span>
+            </div>
+            <p className="text-gray-600 max-w-md mx-auto mb-6">
+            Transformer les conversations grâce à l'intelligence artificielle avancée. Notre chatbot utilise des technologies de pointe pour offrir une expérience de conversation fluide et interactive, permettant une assistance instantanée et efficace.
+            </p>
+            <div className="flex justify-center space-x-3">
+              <a
+                href="#"
+                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="#"
+                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
+              >
+                <Twitter size={18} />
+              </a>
+              <a
+                href="#"
+                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="#"
+                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
+              >
+                <Linkedin size={18} />
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom Footer */}
+          <div className="w-full border-t border-purple-200 pt-6">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="flex items-center mb-4 md:mb-0">
+                <div className="bg-purple-600 text-white p-1 rounded-md mr-2">
+                  <MessageCircle size={14} />
+                </div>
+                <p className="text-gray-600 text-sm">© 2025 Votre assistant intelligent.</p>
+              </div>
+              <div className="flex space-x-6">
+              <div className="mt-4 md:mt-0 flex items-center">
+            <span className="text-sm text-gray-500 flex items-center">
+            Réalisé avec <Heart className="h-3 w-3 text-red-500 mx-1" /> par l'équipe chatBot
+            </span>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
