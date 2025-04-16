@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import login from "../image/login2.png"
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -180,7 +181,7 @@ export default function Login() {
           <div className="hidden md:flex items-center justify-center w-1/2 px-8">
             <div className="relative w-full max-w-md">
               <img 
-                src="https://i.pinimg.com/originals/10/58/c9/1058c9f739ea6feebdb361cb138bea6e.gif" 
+                src={login} 
                 alt="Robot animé" 
                 className="w-full h-auto rounded-lg"
               />
