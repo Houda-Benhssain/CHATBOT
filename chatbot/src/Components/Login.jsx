@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { MessageCircle } from 'lucide-react';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,7 +49,11 @@ export default function Login() {
       <div className="w-full md:w-1/2 flex flex-col">
       <div className="absolute top-6 left-6 z-10">
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2 animate-pulse"></div>
+            <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2 ">
+              <div className="bg-purple-600 text-white p-2 rounded-lg">
+                        <MessageCircle size={20} />
+              </div>
+              </div>
             <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">Chatbot</h1>
           </div>
           <hr className="border-t border-gray-700 mt-2 w-full" />
