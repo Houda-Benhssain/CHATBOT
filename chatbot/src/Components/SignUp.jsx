@@ -98,27 +98,22 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 flex flex-col">
-      {/* Animation de fond */}
-      <div className="absolute inset-0 overflow-hidden opacity-20">
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={i}
-            className="absolute rounded-full bg-purple-500 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 10 + 5}px`,
-              height: `${Math.random() * 10 + 5}px`,
-              animationDuration: `${Math.random() * 20 + 10}s`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          />
-        ))}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 flex">
+      <div className="hidden md:flex w-1/2 relative">
+        <img 
+          src="https://i0.wp.com/www.quytech.com/blog/wp-content/uploads/2020/10/conversational-ai.png?w=937&ssl=1" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute top-6 left-6 z-10">
+          <div className="flex items-center">
+            <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2 animate-pulse"></div>
+            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">Chatbot</h1>
+          </div>
+          <hr className="border-t border-gray-700 mt-2 w-full" />
+        </div>
       </div>
-
-      <div className="relative z-10 w-full pt-6 px-6">
-        <div className="max-w-7xl mx-auto">
+      <div className="w-full md:w-1/2 flex flex-col">
+        <div className="md:hidden relative z-10 w-full pt-6 px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2 animate-pulse"></div>
@@ -127,12 +122,8 @@ export default function SignUpPage() {
           </div>
           <hr className="border-t border-gray-700 mt-2 w-full" />
         </div>
-      </div>
-
-      <div className="relative z-10 flex flex-1 items-center justify-center pb-12">
-        <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center px-4 gap-8">
-          {/* Formulaire d'inscription - maintenant plus large */}
-          <div className="w-full max-w-lg px-4 order-1 md:order-2">
+        <div className="relative z-10 flex flex-1 items-center justify-center pb-12">
+          <div className="w-full max-w-lg px-4">
             <div className="bg-slate-900/80 backdrop-blur-sm py-8 px-6 shadow-xl sm:rounded-2xl sm:px-10 border border-slate-800 transition-all duration-300 hover:shadow-purple-500/10">
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="text-center">
@@ -145,7 +136,6 @@ export default function SignUpPage() {
                 </div>
 
                 <div className="space-y-4">
-                  {/* Nom complet */}
                   <div className="group">
                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
                       Nom complet
@@ -171,8 +161,6 @@ export default function SignUpPage() {
                       )}
                     </div>
                   </div>
-
-                  {/* Email */}
                   <div className="group">
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
                       Email
@@ -199,10 +187,7 @@ export default function SignUpPage() {
                       )}
                     </div>
                   </div>
-
-                  {/* Téléphone et Date de naissance côte à côte */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Téléphone */}
                     <div className="group">
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
                         Numéro de téléphone
@@ -228,8 +213,6 @@ export default function SignUpPage() {
                         )}
                       </div>
                     </div>
-
-                    {/* Date de naissance */}
                     <div className="group">
                       <label htmlFor="birthDate" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
                         Date de naissance
@@ -255,10 +238,7 @@ export default function SignUpPage() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Mot de passe et Confirmation côte à côte */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Mot de passe */}
                     <div className="group">
                       <label htmlFor="password" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
                         Mot de passe
@@ -284,8 +264,6 @@ export default function SignUpPage() {
                         )}
                       </div>
                     </div>
-
-                    {/* Confirmation mot de passe */}
                     <div className="group">
                       <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
                         Confirmation
@@ -326,44 +304,14 @@ export default function SignUpPage() {
 
               <div className="mt-6 text-center text-sm text-gray-400">
                 Vous avez déjà un compte ?{' '}
-                <Link to="/" className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300 hover:from-purple-300 hover:to-pink-200 transition-all duration-300">
+                <Link to="/login" className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300 hover:from-purple-300 hover:to-pink-200 transition-all duration-300">
                   Connexion
                 </Link>
               </div>
             </div>
           </div>
-
-          {/* Robot animé à droite */}
-          <div className="hidden md:flex items-center justify-center w-full md:w-1/2 order-2 md:order-1">
-            <div className="relative w-full max-w-md">
-              <img 
-                src="https://i.pinimg.com/originals/10/58/c9/1058c9f739ea6feebdb361cb138bea6e.gif" 
-                alt="Robot animé" 
-                className="w-full h-auto rounded-lg"
-              />
-            </div>
-          </div>
         </div>
       </div>
-
-      {/* Styles CSS */}
-      <style jsx>{`
-        @keyframes float {
-          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20%, 60% { transform: translateX(-5px); }
-          40%, 80% { transform: translateX(5px); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-        .animate-shake {
-          animation: shake 0.5s ease-in-out;
-        }
-      `}</style>
     </div>
   );
 }
