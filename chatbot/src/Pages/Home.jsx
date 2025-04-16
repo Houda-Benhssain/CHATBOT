@@ -18,18 +18,17 @@ export default function ChatbotInterface() {
         </div>
         <div className="flex gap-2">
           <Link
-            to="/chat"
-            className="px-4 py-1 border border-purple-300 rounded-full text-purple-700 hover:bg-purple-50 transition">
-            Let's Chat
+            to="/login"
+            className="px-4 py-1 border border-purple-300 rounded-full text-purple-700 hover:bg-purple-50 ">
+           Se connecter
           </Link>
-          <Link to="/login" className="px-4 py-1 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition">
-            Sign Up Now!
+          <Link to="/signup" className="px-4 py-1 bg-purple-600 text-white rounded-full hover:bg-purple-700 ">
+          Inscription
           </Link>
         </div>
       </header>
 
-      <section id="home" className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between">
-        {/* Left Side - Text */}
+      <section  className="container mx-auto px-4 py-8 flex  items-center justify-between">
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
           Découvrez l'avenir de l'interaction intelligente
