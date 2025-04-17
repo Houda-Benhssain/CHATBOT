@@ -1,24 +1,22 @@
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Sidebar } from "../Components/sidebar"
 import { ChatHeader } from "../Components/chat-header"
 import { ChatMessages } from "../Components/chat-messages"
 import { ChatInput } from "../Components/chat-input"
 
 export default function ChatInterface() {
-  // State for sidebar visibility
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // State for chat messages
   const [messages, setMessages] = useState([])
 
-  // State for current chat
   const [currentChat, setCurrentChat] = useState({ id: "new", title: "New Chat" })
 
-  // State for all chats
-  const [chats, setChats] = useState([])
+  const [chats, setChats] = useState([
+    { id: "chat1", title: "Previous Chat 1", time: "2 days ago" },
+    { id: "chat2", title: "Voice Assistant Help", time: "1 week ago" },
+    { id: "chat3", title: "Project Ideas", time: "2 weeks ago" },
+  ])
 
-  // State for loading status
   const [isLoading, setIsLoading] = useState(false)
 
   // Load messages from localStorage on component mount
@@ -47,7 +45,7 @@ export default function ChatInterface() {
 
       // Update chat title if it's a new chat
       if (currentChat.id === "new" && messages.length >= 2) {
-        const newChatId = `chat-${Date.now()}`
+        const newChatId = `chat-${Date.now()}` // Fix ID creation
         const newChat = {
           id: newChatId,
           title: messages[0].content.substring(0, 20) + "...",
@@ -104,6 +102,7 @@ export default function ChatInterface() {
 
   // Delete a specific chat
   const deleteChat = (chatId) => {
+    // Remove chat from state
     const updatedChats = chats.filter((chat) => chat.id !== chatId)
     setChats(updatedChats)
 
@@ -147,6 +146,7 @@ export default function ChatInterface() {
 
         setIsLoading(false)
       }, 1000)
+
     } catch (error) {
       console.error("Error getting response:", error)
       setMessages((prev) => [

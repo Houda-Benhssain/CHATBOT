@@ -1,9 +1,24 @@
-import React from "react"
-import { useState } from "react"
-import { Plus, MessageSquare, Mic, Lightbulb, Settings, LogOut, X, Trash2 } from "lucide-react"
+import React, { useState, useRef, useEffect } from "react"
+import { Plus, MessageSquare, Mic, Lightbulb, Settings, LogOut, X, Trash2, User, Sliders } from "lucide-react"
 
-export function Sidebar({ onClose, chats, currentChat, onChatSelect, onNewChat, onDeleteChat }) {
+export function Sidebar({
+  onClose,
+  chats,
+  currentChat,
+  onChatSelect,
+  onNewChat,
+  onDeleteChat,
+  onOpenProfile,
+  onOpenConfiguration,
+}) {
   const [showHistory, setShowHistory] = useState(false)
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false)
+  const dropdownRef = useRef(null)
+
+  // User info (in a real app, this would come from a user context or API)
+  const user = {
+    name: "Utilisateur",
+  }
 
   // Map chat IDs to icons
   const chatIcons = {
@@ -16,6 +31,20 @@ export function Sidebar({ onClose, chats, currentChat, onChatSelect, onNewChat, 
   const getIconForChat = (chatId) => {
     return chatIcons[chatId] || MessageSquare
   }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowSettingsDropdown(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   const handleNewChatClick = () => {
     if (!showHistory) {
@@ -44,6 +73,20 @@ export function Sidebar({ onClose, chats, currentChat, onChatSelect, onNewChat, 
         onNewChat()
       }
     }
+  }
+
+  const toggleSettingsDropdown = () => {
+    setShowSettingsDropdown(!showSettingsDropdown)
+  }
+
+  const handleProfileClick = () => {
+    onOpenProfile()
+    setShowSettingsDropdown(false)
+  }
+
+  const handleConfigurationClick = () => {
+    onOpenConfiguration()
+    setShowSettingsDropdown(false)
   }
 
   return (
@@ -97,10 +140,43 @@ export function Sidebar({ onClose, chats, currentChat, onChatSelect, onNewChat, 
       {!showHistory && <div className="flex-1"></div>}
 
       <div className="mt-auto border-t border-gray-800 pt-4">
-        <div className="mb-2 flex cursor-pointer items-center gap-3 rounded-md p-2 hover:bg-gray-800">
-          <Settings size={18} className="text-gray-400" />
-          <span className="text-sm">Settings</span>
+        {/* Settings dropdown */}
+        <div className="relative" ref={dropdownRef}>
+          <div
+            className="mb-2 flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-800"
+            onClick={toggleSettingsDropdown}
+          >
+            <div className="flex items-center gap-3">
+              <Settings size={18} className="text-gray-400" />
+              <span className="text-sm">Settings</span>
+            </div>
+            <span className={`transition-transform duration-200 ${showSettingsDropdown ? "rotate-180" : ""}`}>▼</span>
+          </div>
+
+          {/* Dropdown menu */}
+          {showSettingsDropdown && (
+            <div className="absolute bottom-full left-0 mb-1 w-full rounded-md bg-gray-800 py-2 shadow-lg">
+              <div className="border-b border-gray-700 px-3 py-2">
+                <div className="text-sm font-medium text-white">{user.name}</div>
+              </div>
+              <div
+                className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
+                onClick={handleProfileClick}
+              >
+                <User size={16} className="text-gray-400" />
+                <span>Profile</span>
+              </div>
+              <div
+                className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
+                onClick={handleConfigurationClick}
+              >
+                <Sliders size={16} className="text-gray-400" />
+                <span>Configuration</span>
+              </div>
+            </div>
+          )}
         </div>
+
         <div className="flex cursor-pointer items-center gap-3 rounded-md p-2 hover:bg-gray-800">
           <LogOut size={18} className="text-gray-400" />
           <span className="text-sm">Log out</span>
@@ -108,7 +184,13 @@ export function Sidebar({ onClose, chats, currentChat, onChatSelect, onNewChat, 
       </div>
 
       {/* Close button for mobile - only visible on small screens */}
-      
+      <button
+        onClick={onClose}
+        className="absolute right-2 top-2 md:hidden rounded-full p-1 text-gray-400 hover:bg-gray-800 hover:text-gray-200"
+      >
+        <span className="sr-only">Close sidebar</span>
+        <X className="h-4 w-4" />
+      </button>
     </div>
   )
 }

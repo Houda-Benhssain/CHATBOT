@@ -1,26 +1,17 @@
 import React from "react"
-import { MessageCircle,Heart, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
-import { useEffect, useState } from "react"
+import { MessageCircle,Heart} from "lucide-react"
+import {  useState } from "react"
 import imagef from '../image/imageFooter.gif'
 export default function Footer() {
   const [isHovered, setIsHovered] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
 
-  // Trigger animation periodically
-  useEffect(() => {
-    const animationInterval = setInterval(() => {
-      setIsAnimating(true)
-      setTimeout(() => setIsAnimating(false), 2000)
-    }, 8000)
-
-    return () => clearInterval(animationInterval)
-  }, [])
 
   return (
     <footer className="bg-gradient-to-br from-pink-50 to-purple-100 pt-12 pb-6">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center">
-          {/* Animated Robot Image */}
+       
           <div
             className="relative mb-8"
             onMouseEnter={() => setIsHovered(true)}
@@ -32,7 +23,6 @@ export default function Footer() {
               ${isHovered || isAnimating ? "rotate-3" : "rotate-0"}
             `}
             >
-              {/* Robot Image */}
               <div className="w-40 h-40 rounded-full overflow-hidden shadow-lg relative">
                 <img src={imagef} alt="Robochat" className="w-full h-full object-cover" />
                 <div
@@ -43,8 +33,6 @@ export default function Footer() {
                 `}
                 ></div>
               </div>
-
-              {/* Animated elements */}
               <div
                 className={`
                 absolute -top-2 -right-2 w-8 h-8 bg-orange-400 rounded-full 
@@ -68,13 +56,12 @@ export default function Footer() {
               ></div>
             </div>
 
-            {/* Robot name */}
             <div className="text-center mt-4">
               <span className="text-xl font-bold text-purple-900">Bienvenue </span>
             </div>
           </div>
 
-          {/* Company Info */}
+
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
               <div className="bg-purple-600 text-white p-2 rounded-lg">
@@ -85,35 +72,9 @@ export default function Footer() {
             <p className="text-gray-600 max-w-md mx-auto mb-6">
             Transformer les conversations grâce à l'intelligence artificielle avancée. Notre chatbot utilise des technologies de pointe pour offrir une expérience de conversation fluide et interactive, permettant une assistance instantanée et efficace.
             </p>
-            <div className="flex justify-center space-x-3">
-              <a
-                href="#"
-                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="#"
-                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
-              >
-                <Twitter size={18} />
-              </a>
-              <a
-                href="#"
-                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="#"
-                className="bg-white p-2 rounded-full text-purple-600 shadow-sm hover:bg-purple-600 hover:text-white transition-colors duration-300"
-              >
-                <Linkedin size={18} />
-              </a>
-            </div>
+          
           </div>
 
-          {/* Bottom Footer */}
           <div className="w-full border-t border-purple-200 pt-6">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center mb-4 md:mb-0">
