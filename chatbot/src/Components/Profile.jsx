@@ -1,186 +1,161 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Edit, Mail, Phone, Calendar, User } from 'lucide-react';
+import { Mail, Phone, Calendar, User, MessageCircle, ChevronLeft } from 'lucide-react';
+import profilee from "../image/profilee.png";
+import EditProfile from './editProfile';
 
-export default function UserProfile() {
+const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
-    firstName: 'Jean',
-    lastName: 'Dupont',
-    birthDate: '1990-05-15',
-    phone: '+33 6 12 34 56 78',
-    email: 'jean.dupont@example.com'
+    name: "Jean Dupont",
+    email: "jean.dupont@example.com",
+    phone: "+33 6 12 34 56 78",
+    birthDate: "1990-05-15"
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfile(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleProfileUpdate = (updatedProfile) => {
+    setProfile(updatedProfile);
     setIsEditing(false);
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex">
-      {/* Section Informations */}
-      <div className="w-full md:w-1/2 p-8">
-        <div className="mb-8">
-          <Link to="/" className="flex items-center text-purple-400 mb-4">
-            <ChevronLeft className="mr-1" />
-            Retour
-          </Link>
-          <h1 className="text-2xl font-bold">Mon Profil</h1>
-        </div>
-
-        <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
-          {/* Photo de profil */}
-          <div className="flex flex-col items-center mb-6">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden border-2 border-purple-500">
-                <User className="h-12 w-12 text-purple-400" />
-              </div>
-              <button 
-                onClick={() => setIsEditing(!isEditing)}
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-600 hover:bg-purple-700 text-white py-1 px-4 rounded-full text-sm flex items-center gap-1"
-              >
-                <Edit className="h-3 w-3" />
-                {isEditing ? 'Annuler' : 'Modifier'}
-              </button>
-            </div>
-          </div>
-
-          {isEditing ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-slate-400 mb-1">Prénom</label>
-                  <input
-                    name="firstName"
-                    value={profile.firstName}
-                    onChange={handleChange}
-                    className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm text-slate-400 mb-1">Nom</label>
-                  <input
-                    name="lastName"
-                    value={profile.lastName}
-                    onChange={handleChange}
-                    className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm text-slate-400 mb-1">Email</label>
-                <div className="flex items-center bg-slate-800 border border-slate-700 rounded px-3 py-2">
-                  <Mail className="h-4 w-4 text-slate-500 mr-2" />
-                  <input
-                    name="email"
-                    type="email"
-                    value={profile.email}
-                    onChange={handleChange}
-                    className="w-full bg-transparent"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm text-slate-400 mb-1">Téléphone</label>
-                <div className="flex items-center bg-slate-800 border border-slate-700 rounded px-3 py-2">
-                  <Phone className="h-4 w-4 text-slate-500 mr-2" />
-                  <input
-                    name="phone"
-                    type="tel"
-                    value={profile.phone}
-                    onChange={handleChange}
-                    className="w-full bg-transparent"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm text-slate-400 mb-1">Date de naissance</label>
-                <div className="flex items-center bg-slate-800 border border-slate-700 rounded px-3 py-2">
-                  <Calendar className="h-4 w-4 text-slate-500 mr-2" />
-                  <input
-                    name="birthDate"
-                    type="date"
-                    value={profile.birthDate}
-                    onChange={handleChange}
-                    className="w-full bg-transparent"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded mt-4"
-              >
-                Enregistrer
-              </button>
-            </form>
-          ) : (
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-slate-400">Nom complet</p>
-                <p className="text-lg">{profile.firstName} {profile.lastName}</p>
-              </div>
-
-              <div className="flex items-center">
-                <Mail className="h-4 w-4 text-slate-500 mr-2" />
-                <div>
-                  <p className="text-sm text-slate-400">Email</p>
-                  <p>{profile.email}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <Phone className="h-4 w-4 text-slate-500 mr-2" />
-                <div>
-                  <p className="text-sm text-slate-400">Téléphone</p>
-                  <p>{profile.phone}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <Calendar className="h-4 w-4 text-slate-500 mr-2" />
-                <div>
-                  <p className="text-sm text-slate-400">Date de naissance</p>
-                  <p>
-                    {new Date(profile.birthDate).toLocaleDateString('fr-FR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 flex flex-col">
+      <div className="absolute inset-0 overflow-hidden opacity-20">
+        {[...Array(20)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-purple-500 animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 10 + 5}px`,
+              height: `${Math.random() * 10 + 5}px`,
+              animationDuration: `${Math.random() * 20 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`
+            }}
+          />
+        ))}
       </div>
 
-      {/* Photo illustrative à droite */}
-      <div className="hidden md:block w-1/2 bg-slate-900">
-        <div className="h-full flex items-center justify-center p-8">
-          <div className="relative w-full h-full max-w-md">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-slate-900 rounded-lg"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="w-32 h-32 rounded-full bg-slate-800 border-2 border-purple-500 flex items-center justify-center mx-auto mb-4">
-                  <User className="h-16 w-16 text-purple-400" />
+      <div className="absolute top-6 left-6 z-10">
+        <div className="flex items-center">
+          <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2">
+            <div className="bg-purple-600 text-white p-2 rounded-lg">
+              <MessageCircle size={20} />
+            </div>
+          </div>
+          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
+            Chatbot
+          </h1>
+        </div>
+        <hr className="border-t border-gray-700 mt-2 w-full" />
+      </div>
+      <div className="relative z-10 flex flex-1 items-center justify-center pb-12">
+        {isEditing ? (
+          <EditProfile 
+            profile={profile} 
+            onSave={handleProfileUpdate} 
+            onCancel={() => setIsEditing(false)}
+          />
+        ) : (
+          <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-8 px-4">
+            <div className="w-full md:w-1/3 flex items-center justify-center p-4">
+              <div className="relative w-full max-w-xs">
+                <img 
+                  src={profilee}
+                  alt="Profil utilisateur" 
+                  className="w-full h-auto object-contain"
+                  style={{
+                    maxHeight: '400px',
+                    filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))'
+                  }}
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-2/3 px-4">
+              <div className="bg-slate-900/80 backdrop-blur-sm py-8 px-6 shadow-xl rounded-2xl border border-slate-800 transition-all duration-300 ">
+                <Link to="/chat" className="absolute top-4 left-4 text-purple-400 cursor-pointer flex items-center">
+                  <ChevronLeft size={24} className="mr-1" />
+                  <span>Retour</span>
+                </Link>
+                
+                <div className="text-center mb-6">
+                  <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300 mb-4">
+                    Mon Profil
+                  </h2>
                 </div>
-                <h2 className="text-xl font-semibold mb-1">{profile.firstName} {profile.lastName}</h2>
-                <p className="text-purple-400">{profile.email}</p>
+                
+                <div className="flex flex-col items-center mb-8">
+                  <div className="relative">
+                    <div className="w-32 h-32 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden border-4 border-purple-500">
+                      <User className="h-16 w-16 text-purple-400" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6 mb-6">
+                  <div className="flex items-start gap-4">
+                    <User className="h-6 w-6 text-purple-400 mt-2" />
+                    <div>
+                      <p className="text-sm text-purple-300 mb-1">Nom complet</p>
+                      <p className="text-white font-medium text-lg">{profile.name}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <Mail className="h-6 w-6 text-purple-400 mt-2" />
+                    <div>
+                      <p className="text-sm text-purple-300 mb-1">Email</p>
+                      <p className="text-white font-medium text-lg">{profile.email}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <Phone className="h-6 w-6 text-purple-400 mt-2" />
+                    <div>
+                      <p className="text-sm text-purple-300 mb-1">Téléphone</p>
+                      <p className="text-white font-medium text-lg">{profile.phone}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <Calendar className="h-6 w-6 text-purple-400 mt-2" />
+                    <div>
+                      <p className="text-sm text-purple-300 mb-1">Date de naissance</p>
+                      <p className="text-white font-medium text-lg">
+                        {new Date(profile.birthDate).toLocaleDateString('fr-FR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="w-full bg-gradient-to-r from-purple-600  hover:from-purple-700  text-white py-3 px-6 rounded-lg text-lg font-medium mt-6 shadow-lg"
+                >
+                  Modifier le profil
+                </button>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
+
+      <style>{`
+        @keyframes float {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        .animate-float {
+          animation: float linear infinite;
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default UserProfile;

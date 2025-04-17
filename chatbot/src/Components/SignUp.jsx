@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
+import profilee from "../image/profilee.png";
+
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -93,24 +95,49 @@ export default function SignUpPage() {
     setErrors(newErrors);
 
     if (valid) {
-      console.log('Formulaire valide', formData);
-      // Ajoutez ici votre logique d'inscription
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 flex">
-      <div className="hidden md:flex w-1/2 relative">
+      <div className="absolute inset-0 overflow-hidden opacity-20">
+        {[...Array(20)].map((_, i) => {
+          const left = `${Math.random() * 100}%`;
+          const top = `${Math.random() * 100}%`;
+          const size = `${Math.random() * 10 + 5}px`;
+          const duration = `${Math.random() * 20 + 10}s`;
+          const delay = `${Math.random() * 5}s`;
+          return (
+            <div
+              key={i}
+              className="absolute rounded-full bg-purple-500 animate-float"
+              style={{
+                left,
+                top,
+                width: size,
+                height: size,
+                animationDuration: duration,
+                animationDelay: delay,
+              }}
+            />
+          );
+        })}
+      </div>
+      <div className="hidden md:flex w-1/2 relative items-center justify-center shadow-purple">
         <img 
-          src="https://i0.wp.com/www.quytech.com/blog/wp-content/uploads/2020/10/conversational-ai.png?w=937&ssl=1" 
-          className="w-full h-full object-cover"
+          src={profilee} 
+          className="w-2/4 h-2/4 object-cover"
+          style={{
+            maxHeight: '400px',
+            filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))'
+          }}
         />
         <div className="absolute top-6 left-6 z-10">
           <div className="flex items-center">
             <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2">
-               <div className="bg-purple-600 text-white p-2 rounded-lg">
-                                      <MessageCircle size={20} />
-                            </div>
+              <div className="bg-purple-600 text-white p-2 rounded-lg">
+                <MessageCircle size={20} />
+              </div>
             </div>
             <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">Chatbot</h1>
           </div>
@@ -317,6 +344,23 @@ export default function SignUpPage() {
           </div>
         </div>
       </div>
+      <style>{`
+        @keyframes float {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20%, 60% { transform: translateX(-5px); }
+          40%, 80% { transform: translateX(5px); }
+        }
+        .animate-float {
+          animation: float linear infinite;
+        }
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }

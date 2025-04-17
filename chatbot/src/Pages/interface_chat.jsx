@@ -1,137 +1,129 @@
-import React from "react"
-import { useState, useEffect } from "react"
-import { Sidebar } from "../Components/sidebar"
-import { ChatHeader } from "../Components/chat-header"
-import { ChatMessages } from "../Components/chat-messages"
-import { ChatInput } from "../Components/chat-input"
+import React, { useState, useEffect } from "react";
+import { Sidebar } from "../Components/sidebar";
+import { ChatHeader } from "../Components/chat-header";
+import { ChatMessages } from "../Components/chat-messages";
+import { ChatInput } from "../Components/chat-input";
+import { Archive, Trash2, Sliders, X } from "lucide-react";
 
 export default function ChatInterface() {
-  // State for sidebar visibility
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [currentChat, setCurrentChat] = useState({ id: "new", title: "New Chat" });
+  const [chats, setChats] = useState([
+    { id: "chat1", title: "Previous Chat 1", time: "2 days ago" },
+    { id: "chat2", title: "Voice Assistant Help", time: "1 week ago" },
+    { id: "chat3", title: "Project Ideas", time: "2 weeks ago" },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showConfigModal, setShowConfigModal] = useState(false);
 
-  // State for chat messages
-  const [messages, setMessages] = useState([])
-
-  // State for current chat
-  const [currentChat, setCurrentChat] = useState({ id: "new", title: "New Chat" })
-
-  // State for all chats
-  const [chats, setChats] = useState([])
-
-  // State for loading status
-  const [isLoading, setIsLoading] = useState(false)
-
-  // Load messages from localStorage on component mount
+  // Load messages from localStorage
   useEffect(() => {
-    const savedChats = localStorage.getItem("chats")
-    const savedMessages = localStorage.getItem("messages")
+    const savedChats = localStorage.getItem("chats");
+    const savedMessages = localStorage.getItem("messages");
 
-    if (savedChats) {
-      setChats(JSON.parse(savedChats))
-    }
-
+    if (savedChats) setChats(JSON.parse(savedChats));
     if (savedMessages) {
-      const allMessages = JSON.parse(savedMessages)
+      const allMessages = JSON.parse(savedMessages);
       if (currentChat.id in allMessages) {
-        setMessages(allMessages[currentChat.id])
+        setMessages(allMessages[currentChat.id]);
       }
     }
-  }, [currentChat.id])
+  }, [currentChat.id]);
 
-  // Save messages to localStorage when they change
+  // Save messages to localStorage
   useEffect(() => {
     if (messages.length > 0) {
-      const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}")
-      savedMessages[currentChat.id] = messages
-      localStorage.setItem("messages", JSON.stringify(savedMessages))
+      const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}");
+      savedMessages[currentChat.id] = messages;
+      localStorage.setItem("messages", JSON.stringify(savedMessages));
 
-      // Update chat title if it's a new chat
       if (currentChat.id === "new" && messages.length >= 2) {
-        const newChatId = `chat-${Date.now()}`
+        const newChatId = `chat-${Date.now()}`;
         const newChat = {
           id: newChatId,
           title: messages[0].content.substring(0, 20) + "...",
           time: "Just now",
-        }
+        };
 
-        // Update chats list
-        const updatedChats = [newChat, ...chats]
-        setChats(updatedChats)
-        localStorage.setItem("chats", JSON.stringify(updatedChats))
+        const updatedChats = [newChat, ...chats];
+        setChats(updatedChats);
+        localStorage.setItem("chats", JSON.stringify(updatedChats));
+        setCurrentChat(newChat);
 
-        // Update current chat
-        setCurrentChat(newChat)
-
-        // Move messages to new chat ID
-        const updatedMessages = { ...savedMessages }
-        updatedMessages[newChatId] = messages
-        delete updatedMessages["new"]
-        localStorage.setItem("messages", JSON.stringify(updatedMessages))
+        const updatedMessages = { ...savedMessages };
+        updatedMessages[newChatId] = messages;
+        delete updatedMessages["new"];
+        localStorage.setItem("messages", JSON.stringify(updatedMessages));
       }
     }
-  }, [messages, chats, currentChat])
+  }, [messages, chats, currentChat]);
 
-  // Toggle sidebar visibility
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen)
-  }
-
-  // Create a new chat
+  // Chat management functions
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  
   const createNewChat = () => {
-    setCurrentChat({ id: "new", title: "New Chat" })
-    setMessages([])
-    setSidebarOpen(false)
-  }
+    setCurrentChat({ id: "new", title: "New Chat" });
+    setMessages([]);
+    setSidebarOpen(false);
+  };
 
-  // Switch to a different chat
   const switchChat = (chatId) => {
-    const chat = chats.find((c) => c.id === chatId)
+    const chat = chats.find((c) => c.id === chatId);
     if (chat) {
-      setCurrentChat(chat)
-
-      // Load messages for this chat
-      const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}")
-      if (chatId in savedMessages) {
-        setMessages(savedMessages[chatId])
-      } else {
-        setMessages([])
-      }
-
-      // Close sidebar on mobile
-      setSidebarOpen(false)
+      setCurrentChat(chat);
+      const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}");
+      setMessages(chatId in savedMessages ? savedMessages[chatId] : []);
+      setSidebarOpen(false);
     }
-  }
+  };
 
-  // Delete a specific chat
   const deleteChat = (chatId) => {
-    const updatedChats = chats.filter((chat) => chat.id !== chatId)
-    setChats(updatedChats)
+    const updatedChats = chats.filter((chat) => chat.id !== chatId);
+    setChats(updatedChats);
+    localStorage.setItem("chats", JSON.stringify(updatedChats));
 
-    // Update localStorage
-    localStorage.setItem("chats", JSON.stringify(updatedChats))
-
-    // Remove chat messages from localStorage
-    const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}")
+    const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}");
     if (chatId in savedMessages) {
-      delete savedMessages[chatId]
-      localStorage.setItem("messages", JSON.stringify(savedMessages))
+      delete savedMessages[chatId];
+      localStorage.setItem("messages", JSON.stringify(savedMessages));
     }
-  }
 
-  // Handle sending a message
+    if (currentChat.id === chatId) createNewChat();
+  };
+
+  // Configuration modal functions
+  const deleteAllChats = () => {
+    if (confirm("Are you sure you want to delete ALL chats?")) {
+      setChats([]);
+      localStorage.removeItem("chats");
+      localStorage.removeItem("messages");
+      createNewChat();
+      setShowConfigModal(false);
+    }
+  };
+
+  const archiveAllChats = () => {
+    // Implement archive functionality here
+    console.log("Archiving all chats");
+    setShowConfigModal(false);
+  };
+
+  const manageChats = () => {
+    // Implement manage functionality here
+    console.log("Managing chats");
+    setShowConfigModal(false);
+  };
+
+  // Chat message handling
   const handleSendMessage = async (message) => {
-    if (!message.trim()) return
+    if (!message.trim()) return;
 
-    // Add user message
-    const userMessage = { role: "user", content: message }
-    setMessages((prev) => [...prev, userMessage])
-
-    // Show loading state
-    setIsLoading(true)
+    const userMessage = { role: "user", content: message };
+    setMessages((prev) => [...prev, userMessage]);
+    setIsLoading(true);
 
     try {
-      // In a real app, you would call your AI API here
-      // This is a simulated response
       setTimeout(() => {
         const responses = [
           "I understand what you're asking about. Can you provide more details?",
@@ -139,29 +131,83 @@ export default function ChatInterface() {
           "Based on my knowledge, I can tell you that this topic has several aspects to consider.",
           "I'd be happy to help with that! Let me explain how it works.",
           "Thanks for your question. The answer depends on several factors.",
-        ]
-
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-
-        setMessages((prev) => [...prev, { role: "assistant", content: randomResponse }])
-
-        setIsLoading(false)
-      }, 1000)
+        ];
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        setMessages((prev) => [...prev, { role: "assistant", content: randomResponse }]);
+        setIsLoading(false);
+      }, 1000);
     } catch (error) {
-      console.error("Error getting response:", error)
+      console.error("Error getting response:", error);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
-      ])
-      setIsLoading(false)
+      ]);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex h-screen bg-gray-950 text-gray-300">
-      {/* Sidebar - hidden on mobile unless toggled */}
+      {showConfigModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <div 
+            className="relative bg-gray-800/90 rounded-lg border border-gray-700 shadow-2xl w-full max-w-md mx-4 backdrop-blur-sm pointer-events-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <Archive className="text-purple-400 mr-2" size={20} />
+                <span>Gestion des conversations</span>
+              </h3>
+            </div>
+                        <div className="p-4 space-y-3">
+              <button
+                onClick={archiveAllChats}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group"
+              >
+                <div className="p-2 bg-purple-900/30 rounded-lg group-hover:bg-purple-900/50">
+                  <Archive size={18} className="text-purple-400" />
+                </div>
+                <span className="text-white">Archiver tous les chats</span>
+              </button>
+              
+              <button
+                onClick={deleteAllChats}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group text-red-400"
+              >
+                <div className="p-2 bg-red-900/30 rounded-lg group-hover:bg-red-900/50">
+                  <Trash2 size={18} />
+                </div>
+                <span>Supprimer tous les chats</span>
+              </button>
+              
+              <button
+                onClick={manageChats}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group text-blue-400"
+              >
+                <div className="p-2 bg-blue-900/30 rounded-lg group-hover:bg-blue-900/50">
+                  <Sliders size={18} />
+                </div>
+                <span>Gérer les archives</span>
+              </button>
+            </div>
+            <div className="p-3 border-t border-gray-700 flex justify-end">
+              <button
+                onClick={() => setShowConfigModal(false)}
+                className="px-4 py-2 text-sm rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+                    <div 
+            className="absolute inset-0 pointer-events-auto"
+            onClick={() => setShowConfigModal(false)}
+          />
+        </div>
+      )}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-gray-900 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-gray-900 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -172,12 +218,16 @@ export default function ChatInterface() {
           onChatSelect={switchChat}
           onNewChat={createNewChat}
           onDeleteChat={deleteChat}
+          onOpenConfiguration={() => setShowConfigModal(true)}
         />
       </div>
 
-      {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <ChatHeader toggleSidebar={toggleSidebar} title={currentChat.title} />
+        <ChatHeader 
+          toggleSidebar={toggleSidebar} 
+          title={currentChat.title}
+          onOpenConfig={() => setShowConfigModal(true)}
+        />
 
         <div className="flex-1 overflow-hidden">
           <ChatMessages messages={messages} isLoading={isLoading} />
@@ -191,5 +241,5 @@ export default function ChatInterface() {
         </div>
       </div>
     </div>
-  )
+  );
 }
