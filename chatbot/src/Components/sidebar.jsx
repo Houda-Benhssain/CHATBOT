@@ -1,5 +1,18 @@
-import React, { useState, useRef, useEffect } from "react"
-import { Plus, MessageSquare, Mic, Lightbulb, Settings, LogOut, X, Trash2, User, Sliders } from "lucide-react"
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  Plus,
+  MessageSquare,
+  Mic,
+  Lightbulb,
+  Settings,
+  LogOut,
+  X,
+  Trash2,
+  User,
+  Sliders,
+  Archive
+} from "lucide-react";
 
 export function Sidebar({
   onClose,
@@ -9,104 +22,115 @@ export function Sidebar({
   onNewChat,
   onDeleteChat,
   onOpenProfile,
-  onOpenConfiguration,
+  onDeleteAllChats,
+  onArchiveAllChats,
+  onManageChats,
+  onOpenConfiguration
 }) {
-  const [showHistory, setShowHistory] = useState(false)
-  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false)
-  const dropdownRef = useRef(null)
+  const [showHistory, setShowHistory] = useState(false);
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+  const [showConfigModal, setShowConfigModal] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // User info (in a real app, this would come from a user context or API)
   const user = {
     name: "Utilisateur",
-  }
+  };
 
-  // Map chat IDs to icons
   const chatIcons = {
     chat1: MessageSquare,
     chat2: Mic,
     chat3: Lightbulb,
-  }
+  };
 
-  // Get default icon if not found in mapping
   const getIconForChat = (chatId) => {
-    return chatIcons[chatId] || MessageSquare
-  }
+    return chatIcons[chatId] || MessageSquare;
+  };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowSettingsDropdown(false)
+        setShowSettingsDropdown(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleNewChatClick = () => {
     if (!showHistory) {
-      // If history is not showing, show it
-      setShowHistory(true)
+      setShowHistory(true);
     } else {
-      // If history is already showing, create a new chat
-      onNewChat()
+      onNewChat();
     }
-  }
+  };
 
   const handleChatSelect = (chatId) => {
-    onChatSelect(chatId)
-    setShowHistory(false)
-  }
+    onChatSelect(chatId);
+    setShowHistory(false);
+  };
 
   const handleDeleteChat = (e, chatId) => {
-    // Stop the click event from bubbling up to the parent
-    e.stopPropagation()
-
-    if (confirm("Are you sure you want to delete this chat?")) {
-      onDeleteChat(chatId)
-
-      // If we're deleting the current chat, create a new one
+    e.stopPropagation();
+    if (confirm("Êtes-vous sûr de vouloir supprimer cette conversation ?")) {
+      onDeleteChat(chatId);
       if (currentChat.id === chatId) {
-        onNewChat()
+        onNewChat();
       }
     }
-  }
+  };
 
   const toggleSettingsDropdown = () => {
-    setShowSettingsDropdown(!showSettingsDropdown)
-  }
+    setShowSettingsDropdown(!showSettingsDropdown);
+  };
 
   const handleProfileClick = () => {
-    onOpenProfile()
-    setShowSettingsDropdown(false)
-  }
+    onOpenProfile();
+    setShowSettingsDropdown(false);
+  };
 
   const handleConfigurationClick = () => {
-    onOpenConfiguration()
-    setShowSettingsDropdown(false)
-  }
+    setShowConfigModal(true);
+    setShowSettingsDropdown(false);
+  };
+
+  const handleDeleteAll = () => {
+    if (confirm("Êtes-vous sûr de vouloir supprimer TOUTES les conversations ?")) {
+      onDeleteAllChats();
+      setShowConfigModal(false);
+    }
+  };
+
+  const handleArchiveAll = () => {
+    onArchiveAllChats();
+    setShowConfigModal(false);
+  };
+
+  const handleManageChats = () => {
+    onManageChats();
+    setShowConfigModal(false);
+  };
 
   return (
-    <div className="flex h-full flex-col bg-gray-900 p-4">
+    <div className="flex h-full flex-col bg-gray-900 p-4 relative">
+      
+      {/* Bouton nouvelle conversation */}
       <button
-        className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purple-800 px-4 py-2 text-white hover:bg-purple-700 transition-colors"
-        onClick={handleNewChatClick}
+className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purple-800 px-4 py-2 text-white hover:bg-purple-700 transition-colors"        onClick={handleNewChatClick}
       >
         <Plus size={16} />
-        <span>New chat</span>
+        <span>Nouvelle conversation</span>
       </button>
 
-      {/* Chat history section - only shown when showHistory is true */}
+      {/* Historique des conversations */}
       {showHistory && (
         <div className="flex-1 overflow-y-auto">
-          <h3 className="mb-2 px-2 text-xs font-semibold uppercase text-gray-500">Chat History</h3>
-
+          <h3 className="mb-2 px-2 text-xs font-semibold uppercase text-gray-500">Historique</h3>
           {chats.length > 0 ? (
             chats.map((chat) => {
-              const ChatIcon = getIconForChat(chat.id)
+              const ChatIcon = getIconForChat(chat.id);
               return (
                 <div
                   key={chat.id}
@@ -123,24 +147,23 @@ export function Sidebar({
                   <button
                     onClick={(e) => handleDeleteChat(e, chat.id)}
                     className="absolute right-2 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-400 transition-opacity p-1 rounded-full hover:bg-gray-700"
-                    title="Delete chat"
+                    title="Supprimer"
                   >
                     <Trash2 size={16} />
                   </button>
                 </div>
-              )
+              );
             })
           ) : (
-            <div className="px-2 py-4 text-center text-sm text-gray-500">No chat history</div>
+            <div className="px-2 py-4 text-center text-sm text-gray-500">Aucune conversation</div>
           )}
         </div>
       )}
 
-      {/* Empty space when history is not shown */}
       {!showHistory && <div className="flex-1"></div>}
 
+      {/* Menu Paramètres */}
       <div className="mt-auto border-t border-gray-800 pt-4">
-        {/* Settings dropdown */}
         <div className="relative" ref={dropdownRef}>
           <div
             className="mb-2 flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-800"
@@ -148,49 +171,54 @@ export function Sidebar({
           >
             <div className="flex items-center gap-3">
               <Settings size={18} className="text-gray-400" />
-              <span className="text-sm">Settings</span>
+              <span className="text-sm">Paramètres</span>
             </div>
-            <span className={`transition-transform duration-200 ${showSettingsDropdown ? "rotate-180" : ""}`}>▼</span>
+            <span className={`transition-transform duration-200 ${showSettingsDropdown ? "rotate-180" : ""}`}>
+              ▼
+            </span>
           </div>
 
-          {/* Dropdown menu */}
           {showSettingsDropdown && (
             <div className="absolute bottom-full left-0 mb-1 w-full rounded-md bg-gray-800 py-2 shadow-lg">
               <div className="border-b border-gray-700 px-3 py-2">
                 <div className="text-sm font-medium text-white">{user.name}</div>
               </div>
+              <Link to="/profile">
+                <div
+                  className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
+                  onClick={handleProfileClick}
+                >
+                  <User size={16} className="text-gray-400" />
+                  <span>Profil</span>
+                </div>
+              </Link>
               <div
                 className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
-                onClick={handleProfileClick}
-              >
-                <User size={16} className="text-gray-400" />
-                <span>Profile</span>
-              </div>
-              <div
-                className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
-                onClick={handleConfigurationClick}
+                onClick={onOpenConfiguration}
               >
                 <Sliders size={16} className="text-gray-400" />
-                <span>Configuration</span>
+                <span>Options de conversation</span>
               </div>
             </div>
           )}
         </div>
 
-        <div className="flex cursor-pointer items-center gap-3 rounded-md p-2 hover:bg-gray-800">
-          <LogOut size={18} className="text-gray-400" />
-          <span className="text-sm">Log out</span>
-        </div>
+        <Link to="/">
+          <div className="flex cursor-pointer items-center gap-3 rounded-md p-2 hover:bg-gray-800">
+            <LogOut size={18} className="text-gray-400" />
+            <span className="text-sm">Déconnexion</span>
+          </div>
+        </Link>
       </div>
 
-      {/* Close button for mobile - only visible on small screens */}
+      {/* Bouton Fermer mobile */}
       <button
         onClick={onClose}
         className="absolute right-2 top-2 md:hidden rounded-full p-1 text-gray-400 hover:bg-gray-800 hover:text-gray-200"
       >
-        <span className="sr-only">Close sidebar</span>
+        <span className="sr-only">Fermer</span>
         <X className="h-4 w-4" />
       </button>
     </div>
-  )
+  );
 }
