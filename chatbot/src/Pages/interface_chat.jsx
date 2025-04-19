@@ -3,16 +3,32 @@ import { Sidebar } from "../Components/sidebar";
 import { ChatHeader } from "../Components/chat-header";
 import { ChatMessages } from "../Components/chat-messages";
 import { ChatInput } from "../Components/chat-input";
+<<<<<<< HEAD
 import { Archive, Trash2, Sliders, } from "lucide-react";
+=======
+import { Archive, Trash2, Sliders, X } from "lucide-react";
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
 
 export default function ChatInterface() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState({ id: "new", title: "New Chat" });
+<<<<<<< HEAD
   const [chats, setChats] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
 
+=======
+  const [chats, setChats] = useState([
+    { id: "chat1", title: "Previous Chat 1", time: "2 days ago" },
+    { id: "chat2", title: "Voice Assistant Help", time: "1 week ago" },
+    { id: "chat3", title: "Project Ideas", time: "2 weeks ago" },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showConfigModal, setShowConfigModal] = useState(false);
+
+  // Load messages from localStorage
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   useEffect(() => {
     const savedChats = localStorage.getItem("chats");
     const savedMessages = localStorage.getItem("messages");
@@ -26,6 +42,10 @@ export default function ChatInterface() {
     }
   }, [currentChat.id]);
 
+<<<<<<< HEAD
+=======
+  // Save messages to localStorage
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   useEffect(() => {
     if (messages.length > 0) {
       const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}");
@@ -33,6 +53,7 @@ export default function ChatInterface() {
       localStorage.setItem("messages", JSON.stringify(savedMessages));
 
       if (currentChat.id === "new" && messages.length >= 2) {
+<<<<<<< HEAD
         createAndSaveNewChat(messages);
       }
     }
@@ -60,6 +81,31 @@ export default function ChatInterface() {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
+=======
+        const newChatId = `chat-${Date.now()}`;
+        const newChat = {
+          id: newChatId,
+          title: messages[0].content.substring(0, 20) + "...",
+          time: "Just now",
+        };
+
+        const updatedChats = [newChat, ...chats];
+        setChats(updatedChats);
+        localStorage.setItem("chats", JSON.stringify(updatedChats));
+        setCurrentChat(newChat);
+
+        const updatedMessages = { ...savedMessages };
+        updatedMessages[newChatId] = messages;
+        delete updatedMessages["new"];
+        localStorage.setItem("messages", JSON.stringify(updatedMessages));
+      }
+    }
+  }, [messages, chats, currentChat]);
+
+  // Chat management functions
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   const createNewChat = () => {
     setCurrentChat({ id: "new", title: "New Chat" });
     setMessages([]);
@@ -77,12 +123,19 @@ export default function ChatInterface() {
   };
 
   const deleteChat = (chatId) => {
+<<<<<<< HEAD
     if (!window.confirm("Are you sure you want to delete this chat?")) return;
 
     const updatedChats = chats.filter((chat) => chat.id !== chatId);
     setChats(updatedChats);
     localStorage.setItem("chats", JSON.stringify(updatedChats));
 
+=======
+    const updatedChats = chats.filter((chat) => chat.id !== chatId);
+    setChats(updatedChats);
+    localStorage.setItem("chats", JSON.stringify(updatedChats));
+
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
     const savedMessages = JSON.parse(localStorage.getItem("messages") || "{}");
     if (chatId in savedMessages) {
       delete savedMessages[chatId];
@@ -92,6 +145,10 @@ export default function ChatInterface() {
     if (currentChat.id === chatId) createNewChat();
   };
 
+<<<<<<< HEAD
+=======
+  // Configuration modal functions
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   const deleteAllChats = () => {
     if (confirm("Are you sure you want to delete ALL chats?")) {
       setChats([]);
@@ -103,15 +160,29 @@ export default function ChatInterface() {
   };
 
   const archiveAllChats = () => {
+<<<<<<< HEAD
     console.log("Archiving all chats... (placeholder)");
+=======
+    // Implement archive functionality here
+    console.log("Archiving all chats");
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
     setShowConfigModal(false);
   };
 
   const manageChats = () => {
+<<<<<<< HEAD
     console.log("Managing archives... (placeholder)");
     setShowConfigModal(false);
   };
 
+=======
+    // Implement manage functionality here
+    console.log("Managing chats");
+    setShowConfigModal(false);
+  };
+
+  // Chat message handling
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   const handleSendMessage = async (message) => {
     if (!message.trim()) return;
 
@@ -151,6 +222,7 @@ export default function ChatInterface() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4 border-b border-gray-700">
+<<<<<<< HEAD
               
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
                 <Sliders size={16} className="text-gray-400" />
@@ -173,11 +245,38 @@ export default function ChatInterface() {
                 className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group text-blue-400"
               >
                 <div className="p-2 bg-blue-900/30 rounded-lg group-hover:bg-blue-900/50">
+=======
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <Archive className="text-purple-400 mr-2" size={20} />
+                <span>Gestion des conversations</span>
+              </h3>
+            </div>
+                        <div className="p-4 space-y-3">
+              <button
+                onClick={archiveAllChats}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group"
+              >
+                <div className="p-2 bg-purple-900/30 rounded-lg group-hover:bg-purple-900/50">
+                  <Archive size={18} className="text-purple-400" />
+                </div>
+                <span className="text-white">Archiver tous les chats</span>
+              </button>
+              
+              <button
+                onClick={deleteAllChats}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group text-red-400"
+              >
+                <div className="p-2 bg-red-900/30 rounded-lg group-hover:bg-red-900/50">
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
                   <Trash2 size={18} />
                 </div>
                 <span>Supprimer tous les chats</span>
               </button>
+<<<<<<< HEAD
 
+=======
+              
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
               <button
                 onClick={manageChats}
                 className="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 rounded-lg transition-colors group text-blue-400"
@@ -197,10 +296,19 @@ export default function ChatInterface() {
               </button>
             </div>
           </div>
+<<<<<<< HEAD
           <div className="absolute inset-0 pointer-events-auto" onClick={() => setShowConfigModal(false)} />
         </div>
       )}
 
+=======
+                    <div 
+            className="absolute inset-0 pointer-events-auto"
+            onClick={() => setShowConfigModal(false)}
+          />
+        </div>
+      )}
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
       <div
         className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-gray-900 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -218,8 +326,13 @@ export default function ChatInterface() {
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden">
+<<<<<<< HEAD
         <ChatHeader
           toggleSidebar={toggleSidebar}
+=======
+        <ChatHeader 
+          toggleSidebar={toggleSidebar} 
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
           title={currentChat.title}
           onOpenConfig={() => setShowConfigModal(true)}
         />
@@ -243,4 +356,8 @@ export default function ChatInterface() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196

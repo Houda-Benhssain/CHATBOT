@@ -20,8 +20,12 @@ export default function ChatbotInterface() {
         <div className="flex gap-2">
           <Link
             to="/login"
+<<<<<<< HEAD
             className="px-4 py-1 border border-purple-300 rounded-full text-purple-700 hover:bg-purple-50 transition"
           >
+=======
+            className="px-4 py-1 border border-purple-300 rounded-full text-purple-700 hover:bg-purple-50 transition">
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
             Se connecter
           </Link>
           <Link to="/signup" className="px-4 py-1 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition">

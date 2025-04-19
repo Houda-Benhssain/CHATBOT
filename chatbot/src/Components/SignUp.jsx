@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import profilee from "../image/profilee.png";
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -94,7 +98,10 @@ export default function SignUpPage() {
     setErrors(newErrors);
 
     if (valid) {
+<<<<<<< HEAD
       // Logique supplémentaire si le formulaire est valide
+=======
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
     }
   };
 
@@ -124,12 +131,21 @@ export default function SignUpPage() {
         })}
       </div>
       <div className="hidden md:flex w-1/2 relative items-center justify-center shadow-purple">
+<<<<<<< HEAD
         <img
           src={profilee}
           className="w-2/4 h-2/4 object-cover"
           style={{
             maxHeight: '400px',
             filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))',
+=======
+        <img 
+          src={profilee} 
+          className="w-2/4 h-2/4 object-cover"
+          style={{
+            maxHeight: '400px',
+            filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))'
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
           }}
         />
         <div className="absolute top-6 left-6 z-10">
@@ -139,9 +155,13 @@ export default function SignUpPage() {
                 <MessageCircle size={20} />
               </div>
             </div>
+<<<<<<< HEAD
             <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
               Chatbot
             </h1>
+=======
+            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">Chatbot</h1>
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
           </div>
           <hr className="border-t border-gray-700 mt-2 w-full" />
         </div>

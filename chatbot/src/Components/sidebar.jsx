@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import {
   Plus,
   MessageSquare,
@@ -10,6 +11,18 @@ import {
   X,
   Trash2,
   User,
+=======
+import { 
+  Plus, 
+  MessageSquare, 
+  Mic, 
+  Lightbulb, 
+  Settings, 
+  LogOut, 
+  X, 
+  Trash2, 
+  User, 
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   Sliders,
   Archive
 } from "lucide-react";
@@ -32,6 +45,10 @@ export function Sidebar({
   const [showConfigModal, setShowConfigModal] = useState(false);
   const dropdownRef = useRef(null);
 
+<<<<<<< HEAD
+=======
+  // User info
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   const user = {
     name: "Utilisateur",
   };
@@ -46,6 +63,10 @@ export function Sidebar({
     return chatIcons[chatId] || MessageSquare;
   };
 
+<<<<<<< HEAD
+=======
+  // Close dropdown when clicking outside
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -115,8 +136,71 @@ export function Sidebar({
 
   return (
     <div className="flex h-full flex-col bg-gray-900 p-4 relative">
+<<<<<<< HEAD
       
       {/* Bouton nouvelle conversation */}
+=======
+      {/* Configuration Modal - Centrée sur la page */}
+      {showConfigModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Fond semi-transparent avec flou */}
+          <div 
+            className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+            onClick={() => setShowConfigModal(false)}
+          />
+          
+          {/* Contenu de la modale */}
+          <div className="relative bg-gray-800 rounded-lg border border-gray-700 shadow-xl w-full max-w-md mx-4">
+            {/* En-tête */}
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <Archive className="text-purple-400" />
+                <span>Gestion des conversations</span>
+              </h3>
+            </div>
+            
+            {/* Options */}
+            <div className="p-4 space-y-3">
+              <button
+                onClick={handleArchiveAll}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700 rounded-lg text-left"
+              >
+                <Archive className="text-purple-400" size={18} />
+                <span>Archiver tous les chats</span>
+              </button>
+              
+              <button
+                onClick={handleDeleteAll}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700 rounded-lg text-left text-red-400"
+              >
+                <Trash2 size={18} />
+                <span>Supprimer tous les chats</span>
+              </button>
+              
+              <button
+                onClick={handleManageChats}
+                className="w-full flex items-center gap-3 p-3 hover:bg-gray-700 rounded-lg text-left text-blue-400"
+              >
+                <Sliders size={18} />
+                <span>Gérer les archives</span>
+              </button>
+            </div>
+
+            {/* Pied de page */}
+            <div className="p-3 border-t border-gray-700 flex justify-end">
+              <button
+                onClick={() => setShowConfigModal(false)}
+                className="px-4 py-2 text-sm rounded-lg bg-gray-700 hover:bg-gray-600"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bouton Nouvelle conversation */}
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
       <button
 className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purple-800 px-4 py-2 text-white hover:bg-purple-700 transition-colors"        onClick={handleNewChatClick}
       >
@@ -211,7 +295,11 @@ className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purpl
         </Link>
       </div>
 
+<<<<<<< HEAD
       {/* Bouton Fermer mobile */}
+=======
+      {/* Bouton Fermer (mobile) */}
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
       <button
         onClick={onClose}
         className="absolute right-2 top-2 md:hidden rounded-full p-1 text-gray-400 hover:bg-gray-800 hover:text-gray-200"
@@ -221,4 +309,8 @@ className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purpl
       </button>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
