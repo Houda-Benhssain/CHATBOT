@@ -1,18 +1,19 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { MessageCircle, Check, Send} from "lucide-react"
+import { MessageCircle, Check, Send,BotMessageSquare } from "lucide-react"
 import image from "../image/chatbot3.jpg"
 import Footer from "../Components/Footer"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function ChatbotInterface() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-100">
       <header className="flex justify-between items-center p-4">
         <div className="flex items-center gap-2">
-         <Link to="/">
-          <div className="bg-purple-600 text-white p-2 rounded-lg">
-            <MessageCircle size={20} />
-          </div>
+          <Link to="/">
+            <div className="bg-purple-600 text-white p-2 rounded-lg">
+              <BotMessageSquare size={20} />
+            </div>
           </Link>
           <span className="text-xl font-bold text-purple-900">Chatbot</span>
         </div>
@@ -28,35 +29,89 @@ export default function ChatbotInterface() {
         </div>
       </header>
 
-      <section  className="container mx-auto px-4 py-8 flex  items-center justify-between">
+      <section className="container mx-auto px-4 py-8 flex items-center justify-between">
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-          Découvrez l'avenir de l'interaction intelligente
+            Découvrez l'avenir de l'interaction intelligente
             <span className="block text-orange-500">Chatbot</span>
           </h1>
           <p className="mt-4 text-lg text-gray-700 max-w-md">
-          Découvrez la nouvelle génération de conversations alimentées par l'IA.
-          Notre chatbot est là pour vous assister 24h/24 et 7j/7.          </p>
+            Découvrez la nouvelle génération de conversations alimentées par l'IA. Notre chatbot est là pour vous
+            assister 24h/24 et 7j/7.{" "}
+          </p>
         </div>
 
         {/* Right Side - Chatbot Demo */}
         <div className="md:w-1/2 max-w-md">
           <div className="bg-gray-900 rounded-xl overflow-hidden shadow-xl">
-            <div className="relative">
-              <img src={image } alt="AI Robot" className="w-full" />
+            <div className="relative" style={{ backgroundColor: "#1f2937" }}>
+              {/* Using a different animation approach with scale instead of y-translation */}
+              <div className="overflow-hidden" style={{ marginBottom: "-8px" }}>
+                <motion.div
+                  animate={{
+                    scale: [1, 1.02, 1],
+                    y: [0, -8, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    ease: "easeInOut",
+                    repeat: Number.POSITIVE_INFINITY,
+                    repeatType: "loop",
+                  }}
+                  className="transform-gpu"
+                  style={{
+                    transformOrigin: "center center",
+                    paddingBottom: "10px",
+                    marginBottom: "-10px",
+                    backgroundColor: "#1f2937",
+                  }}
+                >
+                  <img
+                    src={image || "/placeholder.svg"}
+                    alt="AI Robot"
+                    className="w-full block"
+                    style={{
+                      display: "block",
+                      marginBottom: "0",
+                    }}
+                  />
+                </motion.div>
+              </div>
 
               {/* Chat Bubbles */}
-              <div className="absolute top-1/6 left-4">
-                <div className="bg-white text-sm p-2 rounded-lg shadow-md max-w-[180px]">
-                  <p>Salut! Comment puis-je vous aider ?</p>
-                </div>
-              </div>
+              <AnimatePresence>
+                <motion.div
+                  className="absolute top-1/6 left-4"
+                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    delay: 0.5,
+                    duration: 0.8,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                >
+                  <div className="bg-white text-sm p-2 rounded-lg shadow-md max-w-[180px]">
+                    <p>Salut! Comment puis-je vous aider ?</p>
+                  </div>
+                </motion.div>
 
-              <div className="absolute top-1/2 right-4">
-                <div className="bg-purple-600 text-white text-sm p-2 rounded-lg shadow-md max-w-[180px]">
-                  <p>Salut chatbot ! J'ai besoin de ton aide.</p>
-                </div>
-              </div>
+                <motion.div
+                  className="absolute top-1/2 right-4"
+                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    delay: 1.2,
+                    duration: 0.8,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                >
+                  <div className="bg-purple-600 text-white text-sm p-2 rounded-lg shadow-md max-w-[180px]">
+                    <p>Salut chatbot ! J'ai besoin de ton aide.</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -75,12 +130,14 @@ export default function ChatbotInterface() {
               </div>
 
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              Découvrez notre assistant chatbot IA - ChatBot
+                Découvrez notre assistant chatbot IA - ChatBot
               </h2>
 
               <p className="text-white/90 mb-8 max-w-lg">
-              Notre chatbot alimenté par l'IA est conçu pour transformer la manière dont vous interagissez avec la technologie. Grâce à des capacités avancées de traitement du langage naturel et d'apprentissage automatique, Chatbot comprend le contexte,
-               apprend des interactions et fournit une assistance personnalisée adaptée à vos besoins.
+                Notre chatbot alimenté par l'IA est conçu pour transformer la manière dont vous interagissez avec la
+                technologie. Grâce à des capacités avancées de traitement du langage naturel et d'apprentissage
+                automatique, Chatbot comprend le contexte, apprend des interactions et fournit une assistance
+                personnalisée adaptée à vos besoins.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -115,9 +172,10 @@ export default function ChatbotInterface() {
 
               <div className="flex space-x-4">
                 <Link
-                  to="/chat"
-                  className="px-6 py-3 bg-white text-purple-700 font-medium rounded-md hover:bg-white/90 transition inline-block" >
-                 Parlons-en !
+                  to="/faq"
+                  className="px-6 py-3 bg-white text-purple-700 font-medium rounded-md hover:bg-white/90 transition inline-block"
+                >
+                  Documentation
                 </Link>
               </div>
             </div>
@@ -134,10 +192,11 @@ export default function ChatbotInterface() {
                     <div className="h-full overflow-hidden flex flex-col">
                       {/* Header */}
                       <div className="bg-gray-800 p-3 flex items-center justify-between">
-                        <div className="bg-purple-700  text-white text-xs px-2 py-1 rounded-full">Nouvelle discussion</div>
+                        <div className="bg-purple-700  text-white text-xs px-2 py-1 rounded-full">
+                          Nouvelle discussion
+                        </div>
                       </div>
 
-                    
                       {/* Chat Content */}
                       <div className="flex-1 p-3 overflow-y-auto space-y-3">
                         {/* Bot Message */}
@@ -149,7 +208,7 @@ export default function ChatbotInterface() {
                         <div className="bg-purple-700 rounded-lg p-2 text-white text-xs max-w-[80%] ml-auto">
                           <p>Avec plaisir ! Que souhaitez-vous savoir ?</p>
                         </div>
-  
+
                         <div className="bg-gray-700 rounded-lg p-2 text-white text-xs max-w-[80%]">
                           <p>J'ai quelques questions concernant les chatbots.</p>
                         </div>

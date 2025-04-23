@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phone: '',
-    birthdate: '',
     password: '',
     confirmPassword: ''
   });
@@ -14,8 +11,6 @@ const SignUpPage = () => {
   const [errors, setErrors] = useState({
     fullName: '',
     email: '',
-    phone: '',
-    birthdate: '',
     password: '',
     confirmPassword: ''
   });
@@ -31,6 +26,10 @@ const SignUpPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    validateField(name, value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,13 +38,13 @@ const SignUpPage = () => {
     );
 
     if (isFormValid) {
-
+      alert('Inscription réussie !');
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute right-0 top-0 h-full w-1/4 z-0">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-start p-4 relative overflow-hidden">
+      <div className="absolute right-0 top-0 h-full w-1/2 z-0">
         <div className="absolute inset-0 bg-gradient-to-bl from-purple-800/30 to-purple-600/30" style={{
           clipPath: "polygon(100% 0, 100% 100%, 0 100%)"
         }}></div>
@@ -55,7 +54,7 @@ const SignUpPage = () => {
       </div>
       <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-700 to-purple-500 rounded-full blur-3xl opacity-20 z-0"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-600 to-fuchsia-400 rounded-full blur-3xl opacity-20 z-0"></div>
-        <div className="absolute top-6 left-6 flex items-center z-20">
+            <div className="absolute top-6 left-6 flex items-center z-20">
         <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
@@ -64,7 +63,7 @@ const SignUpPage = () => {
         <span className="text-xl font-bold text-white">Chatbot</span>
       </div>
       <div className="absolute inset-0 overflow-hidden z-0">
-        {[...Array(20)].map((i) => (
+        {[...Array(20)].map((_, i) => (
           <div 
             key={i}
             className="absolute rounded-full bg-purple-600 opacity-10"
@@ -79,116 +78,76 @@ const SignUpPage = () => {
           />
         ))}
       </div>
-      <div className="w-full max-w-2xl bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-purple-500/20 relative z-10 backdrop-blur-sm mt-12">
-        <div className="absolute left-0 top-0 h-full w-24">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-700 to-purple-500" style={{
-            clipPath: "polygon(0 0, 100% 0, 0 100%)"
-          }}></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/80 to-purple-400/80" style={{
-            clipPath: "polygon(0 0, 70% 0, 0 70%)"
-          }}></div>
-        </div>
+      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-purple-500/20 relative z-10 backdrop-blur-sm mt-16 ml-16">
         <div className="py-5 px-6 relative z-10">
           <h2 className="text-center tracking-tight text-4xl font-bold text-white">
             Créer un compte
           </h2>
         </div>
         <div className="p-8 relative z-10">
-          <p className="text-purple-100 text-sm text-center mb-6">
-          Interagissez naturellement avec notre chatbot vocal intelligent
-          </p>
-          <form onSubmit={handleSubmit} className="space-y-6 pl-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-purple-100 text-sm font-medium mb-2">
-                  Nom complet *
-                </label>
-                <input
-                  name="fullName"
-                  type="text"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-gray-700 border ${errors.fullName ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
-                  placeholder="Votre nom complet"
-                />
-                {errors.fullName && <p className="mt-1 text-sm text-red-400">{errors.fullName}</p>}
-              </div>
-
-              <div>
-                <label className="block text-purple-100 text-sm font-medium mb-2">
-                  Adresse email *
-                </label>
-                <input
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-gray-700 border ${errors.email ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
-                  placeholder="votre@email.com"
-                />
-                {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
-              </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Nom complet *
+              </label>
+              <input
+                name="fullName"
+                type="text"
+                value={formData.fullName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.fullName ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="Votre nom complet"
+              />
+              {errors.fullName && <p className="mt-1 text-sm text-red-400">{errors.fullName}</p>}
             </div>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-purple-100 text-sm font-medium mb-2">
-                  Téléphone *
-                </label>
-                <input
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-gray-700 border ${errors.phone ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
-                  placeholder="+123 456 7890"
-                />
-                {errors.phone && <p className="mt-1 text-sm text-red-400">{errors.phone}</p>}
-              </div>
 
-              <div>
-                <label className="block text-purple-100 text-sm font-medium mb-2">
-                  Date de naissance *
-                </label>
-                <input
-                  name="birthdate"
-                  type="date"
-                  value={formData.birthdate}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-gray-700 border ${errors.birthdate ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400`}
-                />
-                {errors.birthdate && <p className="mt-1 text-sm text-red-400">{errors.birthdate}</p>}
-              </div>
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Adresse email *
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.email ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="votre@email.com"
+              />
+              {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
             </div>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-purple-100 text-sm font-medium mb-2">
-                  Mot de passe *
-                </label>
-                <input
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-gray-700 border ${errors.password ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
-                  placeholder="••••••••"
-                />
-                {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
-              </div>
 
-              <div>
-                <label className="block text-purple-100 text-sm font-medium mb-2">
-                  Confirmer mot de passe *
-                </label>
-                <input
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 bg-gray-700 border ${errors.confirmPassword ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
-                  placeholder="••••••••"
-                />
-                {errors.confirmPassword && <p className="mt-1 text-sm text-red-400">{errors.confirmPassword}</p>}
-              </div>
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Mot de passe *
+              </label>
+              <input
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.password ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="••••••••"
+              />
+              {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
+            </div>
+
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Confirmer mot de passe *
+              </label>
+              <input
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.confirmPassword ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="••••••••"
+              />
+              {errors.confirmPassword && <p className="mt-1 text-sm text-red-400">{errors.confirmPassword}</p>}
             </div>
 
             <button
@@ -201,9 +160,9 @@ const SignUpPage = () => {
           <div className="mt-8 text-center">
             <p className="text-purple-100 text-sm">
               Vous avez déjà un compte?{" "}
-              <Link to="/login" className="text-purple-300 hover:text-white font-medium hover:underline transition-colors duration-200">
+              <a href="/login" className="text-purple-300 hover:text-white font-medium hover:underline transition-colors duration-200">
                 Se connecter
-              </Link>
+              </a>
             </p>
           </div>
         </div>
