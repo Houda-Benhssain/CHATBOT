@@ -1,57 +1,38 @@
 import React from "react"
 import { MessageCircle,Heart} from "lucide-react"
-import {  useState } from "react"
 import imagef from '../image/imageFooter.gif'
 export default function Footer() {
-  const [isHovered, setIsHovered] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(false)
-
+  
 
   return (
     <footer className="bg-gradient-to-br from-pink-50 to-purple-100 pt-12 pb-6">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center">
-       
-          <div
-            className="relative mb-8"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}>
             <div
               className={`
-              transform transition-all duration-700 ease-in-out
-              ${isHovered || isAnimating ? "scale-110" : "scale-100"}
-              ${isHovered || isAnimating ? "rotate-3" : "rotate-0"}
-            `}
-            >
+              transform transition-all duration-700 ease-in-out `}>
               <div className="w-40 h-40 rounded-full overflow-hidden shadow-lg relative">
                 <img src={imagef} alt="Robochat" className="w-full h-full object-cover" />
-                <div
-                  className={`
-                  absolute inset-0 bg-gradient-to-r from-purple-400/30 to-pink-300/30
-                  transition-opacity duration-700 ease-in-out
-                  ${isHovered || isAnimating ? "opacity-100" : "opacity-0"}
-                `}
-                ></div>
               </div>
               <div
                 className={`
                 absolute -top-2 -right-2 w-8 h-8 bg-orange-400 rounded-full 
                 transform transition-all duration-700 ease-in-out
-                ${isHovered || isAnimating ? "translate-y-1 translate-x-1" : ""}
+                }
               `}
               ></div>
               <div
                 className={`
                 absolute -bottom-3 -left-3 w-6 h-6 bg-teal-400 rounded-full 
                 transform transition-all duration-700 ease-in-out
-                ${isHovered || isAnimating ? "translate-y-2 translate-x-2" : ""}
+              }
               `}
               ></div>
               <div
                 className={`
                 absolute top-1/4 -left-4 w-4 h-4 bg-pink-400 rounded-full 
                 transform transition-all duration-700 ease-in-out
-                ${isHovered || isAnimating ? "translate-x-2" : ""}
+        }
               `}
               ></div>
             </div>
@@ -84,7 +65,7 @@ export default function Footer() {
                 <p className="text-gray-600 text-sm">© 2025 Votre assistant intelligent.</p>
               </div>
               <div className="flex space-x-6">
-              <div className="mt-4 md:mt-0 flex items-center">
+              <div className="mt-4 md:mt-0  items-center">
             <span className="text-sm text-gray-500 flex items-center">
             Réalisé avec <Heart className="h-3 w-3 text-red-500 mx-1" /> par l'équipe chatBot
             </span>
@@ -93,7 +74,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
+     
     </footer>
   )
 }

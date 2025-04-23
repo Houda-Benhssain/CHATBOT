@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { MessageCircle, Check, Send,BotMessageSquare } from "lucide-react"
+import { MessageCircle, Check, Send,} from "lucide-react"
 import image from "../image/chatbot3.jpg"
 import Footer from "../Components/Footer"
 import { motion, AnimatePresence } from "framer-motion"
@@ -11,8 +11,8 @@ export default function ChatbotInterface() {
       <header className="flex justify-between items-center p-4">
         <div className="flex items-center gap-2">
           <Link to="/">
-            <div className="bg-purple-600 text-white p-2 rounded-lg">
-              <BotMessageSquare size={20} />
+            <div className="bg-purple-700 text-white p-2 rounded-lg">
+              <MessageCircle size={20} />
             </div>
           </Link>
           <span className="text-xl font-bold text-purple-900">Chatbot</span>
@@ -20,12 +20,8 @@ export default function ChatbotInterface() {
         <div className="flex gap-2">
           <Link
             to="/login"
-<<<<<<< HEAD
             className="px-4 py-1 border border-purple-300 rounded-full text-purple-700 hover:bg-purple-50 transition"
           >
-=======
-            className="px-4 py-1 border border-purple-300 rounded-full text-purple-700 hover:bg-purple-50 transition">
->>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
             Se connecter
           </Link>
           <Link to="/signup" className="px-4 py-1 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition">
@@ -42,7 +38,7 @@ export default function ChatbotInterface() {
           </h1>
           <p className="mt-4 text-lg text-gray-700 max-w-md">
             Découvrez la nouvelle génération de conversations alimentées par l'IA. Notre chatbot est là pour vous
-            assister 24h/24 et 7j/7.{" "}
+            assister 24h/24 et 7j/7.
           </p>
         </div>
 
@@ -63,22 +59,18 @@ export default function ChatbotInterface() {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "loop",
                   }}
+                  
                   className="transform-gpu"
                   style={{
                     transformOrigin: "center center",
                     paddingBottom: "10px",
                     marginBottom: "-10px",
-                    backgroundColor: "#1f2937",
+                   
                   }}
                 >
                   <img
                     src={image || "/placeholder.svg"}
                     alt="AI Robot"
-                    className="w-full block"
-                    style={{
-                      display: "block",
-                      marginBottom: "0",
-                    }}
                   />
                 </motion.div>
               </div>
@@ -173,15 +165,6 @@ export default function ChatbotInterface() {
                   </div>
                   <span>Assistance instantanée 24/7</span>
                 </div>
-              </div>
-
-              <div className="flex space-x-4">
-                <Link
-                  to="/faq"
-                  className="px-6 py-3 bg-white text-purple-700 font-medium rounded-md hover:bg-white/90 transition inline-block"
-                >
-                  Documentation
-                </Link>
               </div>
             </div>
 

@@ -1,383 +1,198 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
-import profilee from "../image/profilee.png";
-<<<<<<< HEAD
-=======
+import React, { useState } from "react";
 
->>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
-
-export default function SignUpPage() {
+const SignUpPage = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phone: '',
-    birthDate: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   });
 
   const [errors, setErrors] = useState({
     fullName: '',
     email: '',
-    phone: '',
-    birthDate: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   });
 
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const validatePhone = (phone) => {
-    const re = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-    return re.test(String(phone));
+  const validateField = (name, value) => {
+    const error = value.trim() === '' ? 'Ce champ est requis' : '';
+    setErrors(prev => ({ ...prev, [name]: error }));
+    return !error;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    validateField(name, value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let valid = true;
-    const newErrors = {
-      fullName: '',
-      email: '',
-      phone: '',
-      birthDate: '',
-      password: '',
-      confirmPassword: '',
-    };
 
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Le nom complet est requis';
-      valid = false;
-    }
+    const isFormValid = Object.keys(formData).every(field =>
+      validateField(field, formData[field])
+    );
 
-    if (!formData.email) {
-      newErrors.email = "L'email est requis";
-      valid = false;
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Veuillez entrer un email valide';
-      valid = false;
-    }
-
-    if (!formData.phone) {
-      newErrors.phone = 'Le numéro de téléphone est requis';
-      valid = false;
-    } else if (!validatePhone(formData.phone)) {
-      newErrors.phone = 'Veuillez entrer un numéro valide';
-      valid = false;
-    }
-
-    if (!formData.birthDate) {
-      newErrors.birthDate = 'La date de naissance est requise';
-      valid = false;
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Le mot de passe est requis';
-      valid = false;
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Le mot de passe doit contenir au moins 6 caractères';
-      valid = false;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Les mots de passe ne correspondent pas';
-      valid = false;
-    }
-
-    setErrors(newErrors);
-
-    if (valid) {
-<<<<<<< HEAD
-      // Logique supplémentaire si le formulaire est valide
-=======
->>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
+    if (isFormValid) {
+      console.log('Formulaire soumis:', formData);
+      alert('Inscription réussie !');
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 flex">
-      <div className="absolute inset-0 overflow-hidden opacity-20">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-start p-4 relative overflow-hidden">
+      <div className="absolute right-0 top-0 h-full w-1/2 z-0">
+        <div className="absolute inset-0 bg-gradient-to-bl from-purple-800/30 to-purple-600/30" style={{
+          clipPath: "polygon(100% 0, 100% 100%, 0 100%)"
+        }}></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-purple-700/40 to-purple-500/40" style={{
+          clipPath: "polygon(100% 0, 100% 80%, 20% 100%)"
+        }}></div>
+      </div>
+
+      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-700 to-purple-500 rounded-full blur-3xl opacity-20 z-0"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-600 to-fuchsia-400 rounded-full blur-3xl opacity-20 z-0"></div>
+
+      <div className="absolute top-6 left-6 flex items-center z-20">
+        <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+          </svg>
+        </div>
+        <span className="text-xl font-bold text-white">Chatbot</span>
+      </div>
+
+      {/* Particules décoratives */}
+      <div className="absolute inset-0 overflow-hidden z-0">
         {[...Array(20)].map((_, i) => {
-          const left = `${Math.random() * 100}%`;
-          const top = `${Math.random() * 100}%`;
-          const size = `${Math.random() * 10 + 5}px`;
-          const duration = `${Math.random() * 20 + 10}s`;
-          const delay = `${Math.random() * 5}s`;
+          const size = Math.random() * 10 + 5;
+          const top = Math.random() * 100;
+          const left = Math.random() * 100;
+          const duration = Math.random() * 10 + 10;
+          const delay = Math.random() * 5;
           return (
             <div
               key={i}
-              className="absolute rounded-full bg-purple-500 animate-float"
+              className="absolute rounded-full bg-purple-600 opacity-10"
               style={{
-                left,
-                top,
-                width: size,
-                height: size,
-                animationDuration: duration,
-                animationDelay: delay,
+                width: `${size}px`,
+                height: `${size}px`,
+                top: `${top}%`,
+                left: `${left}%`,
+                animation: `float ${duration}s linear infinite`,
+                animationDelay: `${delay}s`
               }}
             />
           );
         })}
       </div>
-      <div className="hidden md:flex w-1/2 relative items-center justify-center shadow-purple">
-<<<<<<< HEAD
-        <img
-          src={profilee}
-          className="w-2/4 h-2/4 object-cover"
-          style={{
-            maxHeight: '400px',
-            filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))',
-=======
-        <img 
-          src={profilee} 
-          className="w-2/4 h-2/4 object-cover"
-          style={{
-            maxHeight: '400px',
-            filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))'
->>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
-          }}
-        />
-        <div className="absolute top-6 left-6 z-10">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-purple-600 rounded-lg mr-2">
-              <div className="bg-purple-600 text-white p-2 rounded-lg">
-                <MessageCircle size={20} />
-              </div>
-            </div>
-<<<<<<< HEAD
-            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
-              Chatbot
-            </h1>
-=======
-            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">Chatbot</h1>
->>>>>>> fc5574f453a270ecf36b34b7b1d7e0981a2ac196
-          </div>
-          <hr className="border-t border-gray-700 mt-2 w-full" />
+
+      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-purple-500/20 relative z-10 backdrop-blur-sm mt-12 ml-16">
+        <div className="py-5 px-6 relative z-10">
+          <h2 className="text-center tracking-tight text-4xl font-bold text-white">
+            Créer un compte
+          </h2>
         </div>
-      </div>
-      <div className="w-full md:w-1/2 flex flex-col">
-        
-        <div className="relative z-10 flex flex-1 items-center justify-center pb-12">
-          <div className="w-full max-w-lg px-4">
-            <div className="bg-slate-900/80 backdrop-blur-sm mt-16 py-8 px-6 shadow-xl sm:rounded-2xl sm:px-10 border border-slate-800 transition-all duration-300 hover:shadow-purple-500/10">
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="text-center">
-                  <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-900 to-pink-300 mb-2">
-                    Inscription
-                  </h2>
-                  <p className="mt-2 text-sm text-gray-400">
-                    Créez un compte pour commencer à utiliser notre service
-                  </p>
-                </div>
 
-                <div className="space-y-4">
-                  <div className="group">
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
-                      Nom complet
-                    </label>
-                    <div className="mt-1 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg className="h-5 w-5 text-gray-500 group-focus-within:text-purple-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <input
-                        id="fullName" name="fullName" type="text" value={formData.fullName} onChange={handleChange}
-                        placeholder="Entrez votre nom complet"
-                        className={`appearance-none block w-full pl-10 pr-3 py-3 bg-slate-800/50 border ${errors.fullName ? 'border-red-500' : 'border-slate-700'} rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all duration-200 sm:text-sm`}
-                      />
-                      {errors.fullName && (
-                        <p className="mt-1 text-sm text-red-400 animate-shake">
-                          <svg className="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                          </svg>
-                          {errors.fullName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="group">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
-                      Email
-                    </label>
-                    <div className="mt-1 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg className="h-5 w-5 text-gray-500 group-focus-within:text-purple-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                        </svg>
-                      </div>
-                      <input
-                        id="email" name="email" type="email" value={formData.email} onChange={handleChange}
-                        placeholder="Entrez votre adresse email"
-                        className={`appearance-none block w-full pl-10 pr-3 py-3 bg-slate-800/50 border ${errors.email ? 'border-red-500' : 'border-slate-700'} rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all duration-200 sm:text-sm`}
-                      />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-400 animate-shake">
-                          <svg className="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                          </svg>
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="group">
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
-                        Numéro de téléphone
-                      </label>
-                      <div className="mt-1 relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <svg className="h-5 w-5 text-gray-500 group-focus-within:text-purple-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                          </svg>
-                        </div>
-                        <input
-                          id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange}
-                          placeholder="Entrez votre numéro"
-                          className={`appearance-none block w-full pl-10 pr-3 py-3 bg-slate-800/50 border ${errors.phone ? 'border-red-500' : 'border-slate-700'} rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all duration-200 sm:text-sm`}
-                        />
-                        {errors.phone && (
-                          <p className="mt-1 text-sm text-red-400 animate-shake">
-                            <svg className="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                            </svg>
-                            {errors.phone}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="group">
-                      <label htmlFor="birthDate" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
-                        Date de naissance
-                      </label>
-                      <div className="mt-1 relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <svg className="h-5 w-5 text-gray-500 group-focus-within:text-purple-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <input
-                          id="birthDate" name="birthDate" type="date" value={formData.birthDate} onChange={handleChange}
-                          className={`appearance-none block w-full pl-10 pr-3 py-3 bg-slate-800/50 border ${errors.birthDate ? 'border-red-500' : 'border-slate-700'} rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all duration-200 sm:text-sm`}
-                        />
-                        {errors.birthDate && (
-                          <p className="mt-1 text-sm text-red-400 animate-shake">
-                            <svg className="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                            </svg>
-                            {errors.birthDate}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="group">
-                      <label htmlFor="password" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
-                        Mot de passe
-                      </label>
-                      <div className="mt-1 relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <svg className="h-5 w-5 text-gray-500 group-focus-within:text-purple-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <input
-                          id="password" name="password" type="password" value={formData.password} onChange={handleChange}
-                          placeholder="Créez un mot de passe"
-                          className={`appearance-none block w-full pl-10 pr-3 py-3 bg-slate-800/50 border ${errors.password ? 'border-red-500' : 'border-slate-700'} rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all duration-200 sm:text-sm`}
-                        />
-                        {errors.password && (
-                          <p className="mt-1 text-sm text-red-400 animate-shake">
-                            <svg className="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                            </svg>
-                            {errors.password}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="group">
-                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 group-focus-within:text-purple-400 transition-colors duration-200">
-                        Confirmation
-                      </label>
-                      <div className="mt-1 relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <svg className="h-5 w-5 text-gray-500 group-focus-within:text-purple-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <input
-                          id="confirmPassword" name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange}
-                          placeholder="Confirmez le mot de passe"
-                          className={`appearance-none block w-full pl-10 pr-3 py-3 bg-slate-800/50 border ${errors.confirmPassword ? 'border-red-500' : 'border-slate-700'} rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all duration-200 sm:text-sm`}
-                        />
-                        {errors.confirmPassword && (
-                          <p className="mt-1 text-sm text-red-400 animate-shake">
-                            <svg className="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                            </svg>
-                            {errors.confirmPassword}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-900 to-purple-900 hover:from-purple-700 hover:to-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300"
-                  >
-                    S'inscrire
-                  </button>
-                </div>
-              </form>
-
-              <div className="mt-6 text-center text-sm text-gray-400">
-                Vous avez déjà un compte ?{' '}
-                <Link
-                  to="/login"
-                  className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300 hover:from-purple-300 hover:to-pink-200 transition-all duration-300"
-                >
-                  Connexion
-                </Link>
-              </div>
+        <div className="p-8 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Nom complet *
+              </label>
+              <input
+                name="fullName"
+                type="text"
+                value={formData.fullName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.fullName ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="Votre nom complet"
+              />
+              {errors.fullName && <p className="mt-1 text-sm text-red-400">{errors.fullName}</p>}
             </div>
+
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Adresse email *
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.email ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="votre@email.com"
+              />
+              {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
+            </div>
+
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Mot de passe *
+              </label>
+              <input
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.password ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="••••••••"
+              />
+              {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
+            </div>
+
+            <div>
+              <label className="block text-purple-100 text-sm font-medium mb-2">
+                Confirmer mot de passe *
+              </label>
+              <input
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full px-4 py-3 bg-slate-950 border ${errors.confirmPassword ? 'border-red-500' : 'border-purple-500/30'} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 placeholder-purple-200/50`}
+                placeholder="••••••••"
+              />
+              {errors.confirmPassword && <p className="mt-1 text-sm text-red-400">{errors.confirmPassword}</p>}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full mt-6 bg-gradient-to-r from-purple-700 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-purple-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 font-medium text-lg"
+            >
+              S'inscrire
+            </button>
+          </form>
+
+          <div className="mt-8 text-center">
+            <p className="text-purple-100 text-sm">
+              Vous avez déjà un compte?{" "}
+              <a href="/login" className="text-purple-300 hover:text-white font-medium hover:underline transition-colors duration-200">
+                Se connecter
+              </a>
+            </p>
           </div>
         </div>
       </div>
-      <style>{`
+
+      <style jsx>{`
         @keyframes float {
-          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20%, 60% { transform: translateX(-5px); }
-          40%, 80% { transform: translateX(5px); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-        .animate-shake {
-          animation: shake 0.5s ease-in-out;
+          0% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+          100% { transform: translateY(0) rotate(0deg); }
         }
       `}</style>
     </div>
   );
-}
+};
+
+export default SignUpPage;
