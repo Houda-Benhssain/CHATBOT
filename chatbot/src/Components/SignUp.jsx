@@ -33,6 +33,7 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
 
     const isFormValid = Object.keys(formData).every(field =>
       validateField(field, formData[field])
@@ -40,6 +41,13 @@ const SignUpPage = () => {
 
     if (isFormValid) {
       console.log('Formulaire soumis:', formData);
+=======
+        const isFormValid = Object.keys(formData).every(field => 
+      validateField(field, formData[field])
+    );
+
+    if (isFormValid) {
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
       alert('Inscription réussie !');
     }
   };
@@ -53,6 +61,7 @@ const SignUpPage = () => {
         <div className="absolute inset-0 bg-gradient-to-bl from-purple-700/40 to-purple-500/40" style={{
           clipPath: "polygon(100% 0, 100% 80%, 20% 100%)"
         }}></div>
+<<<<<<< HEAD
       </div>
 
       <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-700 to-purple-500 rounded-full blur-3xl opacity-20 z-0"></div>
@@ -101,6 +110,43 @@ const SignUpPage = () => {
 
         <div className="p-8 relative z-10">
           <form onSubmit={handleSubmit} className="space-y-6">
+=======
+      </div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-700 to-purple-500 rounded-full blur-3xl opacity-20 z-0"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-600 to-fuchsia-400 rounded-full blur-3xl opacity-20 z-0"></div>
+            <div className="absolute top-6 left-6 flex items-center z-20">
+        <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+          </svg>
+        </div>
+        <span className="text-xl font-bold text-white">Chatbot</span>
+      </div>
+      <div className="absolute inset-0 overflow-hidden z-0">
+        {[...Array(20)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-purple-600 opacity-10"
+            style={{
+              width: `${Math.random() * 10 + 5}px`,
+              height: `${Math.random() * 10 + 5}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animation: `float ${Math.random() * 10 + 10}s linear infinite`,
+              animationDelay: `${Math.random() * 5}s`
+            }}
+          />
+        ))}
+      </div>
+      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-purple-500/20 relative z-10 backdrop-blur-sm mt-16 ml-16">
+        <div className="py-5 px-6 relative z-10">
+          <h2 className="text-center tracking-tight text-4xl font-bold text-white">
+            Créer un compte
+          </h2>
+        </div>
+        <div className="p-8 relative z-10">
+        <form onSubmit={handleSubmit} className="space-y-6">
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
             <div>
               <label className="block text-purple-100 text-sm font-medium mb-2">
                 Nom complet *
@@ -172,7 +218,10 @@ const SignUpPage = () => {
               S'inscrire
             </button>
           </form>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
           <div className="mt-8 text-center">
             <p className="text-purple-100 text-sm">
               Vous avez déjà un compte?{" "}
@@ -195,4 +244,8 @@ const SignUpPage = () => {
   );
 };
 
+<<<<<<< HEAD
 export default SignUpPage;
+=======
+export default SignUpPage;
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151

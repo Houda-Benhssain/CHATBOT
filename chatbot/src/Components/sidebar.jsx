@@ -10,8 +10,12 @@ import {
   X,
   Trash2,
   User,
+<<<<<<< HEAD
   Sliders,
   Archive
+=======
+  Sliders
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
 } from "lucide-react";
 
 export function Sidebar({
@@ -22,14 +26,10 @@ export function Sidebar({
   onNewChat,
   onDeleteChat,
   onOpenProfile,
-  onDeleteAllChats,
-  onArchiveAllChats,
-  onManageChats,
   onOpenConfiguration
 }) {
   const [showHistory, setShowHistory] = useState(false);
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-  const [showConfigModal, setShowConfigModal] = useState(false);
   const dropdownRef = useRef(null);
 
   const user = {
@@ -86,45 +86,23 @@ export function Sidebar({
     setShowSettingsDropdown(!showSettingsDropdown);
   };
 
-  const handleProfileClick = () => {
-    onOpenProfile();
-    setShowSettingsDropdown(false);
-  };
-
-  const handleConfigurationClick = () => {
-    setShowConfigModal(true);
-    setShowSettingsDropdown(false);
-  };
-
-  const handleDeleteAll = () => {
-    if (confirm("Êtes-vous sûr de vouloir supprimer TOUTES les conversations ?")) {
-      onDeleteAllChats();
-      setShowConfigModal(false);
-    }
-  };
-
-  const handleArchiveAll = () => {
-    onArchiveAllChats();
-    setShowConfigModal(false);
-  };
-
-  const handleManageChats = () => {
-    onManageChats();
-    setShowConfigModal(false);
-  };
-
   return (
     <div className="flex h-full flex-col bg-gray-900 p-4 relative">
+<<<<<<< HEAD
       
       {/* Bouton nouvelle conversation */}
       <button
 className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purple-900 px-4 py-2 text-white hover:bg-purple-700 transition-colors"        onClick={handleNewChatClick}
+=======
+      <button
+        className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purple-800 px-4 py-2 text-white hover:bg-purple-700 transition-colors"
+        onClick={handleNewChatClick}
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
       >
         <Plus size={16} />
         <span>Nouvelle conversation</span>
       </button>
 
-      {/* Historique des conversations */}
       {showHistory && (
         <div className="flex-1 overflow-y-auto">
           <h3 className="mb-2 px-2 text-xs font-semibold uppercase text-gray-500">Historique</h3>
@@ -162,7 +140,6 @@ className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purpl
 
       {!showHistory && <div className="flex-1"></div>}
 
-      {/* Menu Paramètres */}
       <div className="mt-auto border-t border-gray-800 pt-4">
         <div className="relative" ref={dropdownRef}>
           <div
@@ -183,15 +160,13 @@ className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purpl
               <div className="border-b border-gray-700 px-3 py-2">
                 <div className="text-sm font-medium text-white">{user.name}</div>
               </div>
-              <Link to="/profile">
-                <div
-                  className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
-                  onClick={handleProfileClick}
-                >
-                  <User size={16} className="text-gray-400" />
-                  <span>Profil</span>
-                </div>
-              </Link>
+              <div
+                className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
+                onClick={onOpenProfile}
+              >
+                <User size={16} className="text-gray-400" />
+                <span>Profil</span>
+              </div>
               <div
                 className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-gray-700"
                 onClick={onOpenConfiguration}
@@ -211,7 +186,10 @@ className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purpl
         </Link>
       </div>
 
+<<<<<<< HEAD
       {/* Bouton Fermer mobile */}
+=======
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
       <button
         onClick={onClose}
         className="absolute right-2 top-2 md:hidden rounded-full p-1 text-gray-400 hover:bg-gray-800 hover:text-gray-200"
@@ -221,4 +199,8 @@ className="mb-4 flex w-full items-center justify-start gap-2 rounded-md bg-purpl
       </button>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151

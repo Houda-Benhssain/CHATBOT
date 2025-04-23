@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react"
 import { useState } from "react"
 import { MessageCircle, Mail, Lock } from "lucide-react"
@@ -11,6 +12,21 @@ export default function LoginPage() {
     email: "",
     password: "",
   })
+=======
+import React from "react";
+import { useState } from "react";
+import login from "../image/chatbot.png";
+import { BotMessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: ""
+  });
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
 
   const validatePassword = (password) => {
     return password.length >= 6
@@ -44,8 +60,13 @@ export default function LoginPage() {
     }
 
     if (!isValid) {
+<<<<<<< HEAD
       setErrors(newErrors)
       return
+=======
+      setErrors(newErrors);
+      return;
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
     }
 
     // Add your authentication logic here
@@ -64,6 +85,7 @@ export default function LoginPage() {
   }
 
   return (
+<<<<<<< HEAD
     <div className="flex min-h-screen w-full items-center justify-center bg-[#111827] p-0 overflow-hidden">
       <div className="relative h-screen w-full">
         {/* Diagonal purple background */}
@@ -73,6 +95,40 @@ export default function LoginPage() {
             clipPath: "polygon(0 0, 0 100%, 100% 0)",
           }}
         >
+=======
+    <div className="flex min-h-screen w-full items-center justify-center bg-black p-0">
+      <div className="h-screen w-full overflow-hidden bg-black shadow-2xl md:flex">
+        {/* Left side - Purple background with image */}
+        <div className="relative h-1/2 bg-gradient-to-br from-purple-600 to-purple-900 p-8 text-white md:h-screen md:w-1/2">
+          <div className="relative z-10">
+            <div className="flex items-center">
+             <Link to="/">
+             <div className=" text-white p-2 rounded-lg mr-2">
+                <BotMessageSquare size={25} />
+              </div>
+             </Link>
+              <h1 className="text-2xl font-bold">ChatBot</h1>
+            </div>
+            <span className="text-sm text-white flex items-center">
+              Bienvenue <BotMessageSquare className="h-3 w-3 text-white mx-1" /> sur le site web
+            </span>
+          </div>
+
+          {/* Animated Robot Image */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.img
+              src={login}
+              alt="Chatbot"
+              width={300}
+              height={300}
+              className="object-contain"
+              initial={{ y: 0, rotate: 0 }}
+              animate="float"
+              variants={robotVariants}
+            />
+          </div>
+
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
           {/* Stars/bubbles effect */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
@@ -206,5 +262,12 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+<<<<<<< HEAD
   )
 }
+=======
+  );
+};
+
+export default LoginPage;
+>>>>>>> e8fb4ae74220ea5c510554a675ab3acf36f54151
